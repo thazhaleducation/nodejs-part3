@@ -1,6 +1,16 @@
-const _ = require("lodash");
+const http = require('node:http');
 
-let array_1 = [1, 2, 3];
-let array_2 = [2, 3, 4];
+const server = http.createServer(function(req, res) {
+  console.log("Request Received");
+  console.log(req.url);
+  console.log(req.method);
+  res.write("Your response processed successfully", function(err) {
+    if (err) {
+      console.error(err);
+      console.log("Error in response sending");
+    }
+  })
+  res.end();
+});
 
-console.log(_.intersection(array_1, array_2));
+server.listen(8000);
