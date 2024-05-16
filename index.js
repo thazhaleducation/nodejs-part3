@@ -29,12 +29,22 @@ const server = http.createServer(function (req, res) {
 
   if (req.method == 'GET' && url.pathname == "/home") {
     res.statusCode = 200
-
     res.write(homePageResponse(), responseErrHandler);
-  } if (req.method == 'GET' && url.pathname == "/contact") {
+  } else if (req.method == 'GET' && url.pathname == "/contact") {
     res.statusCode = 200
-
     res.write(contactPageResponse(), responseErrHandler);
+  } else if (req.method == 'POST' && url.pathname == "/register") {
+    res.statusCode = 200;
+    let data = '';
+    req.on('data', function(chunk) {
+      data += chunk;
+    });
+
+    req.on('end', function() {
+      console.log("Data in the request %s", data);
+    });
+
+    res.write("Registration successful", responseErrHandler);
   } else {
     res.statusCode = 400
     res.statusMessage = "Server only supports GET request.";
