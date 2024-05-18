@@ -1,7 +1,7 @@
 const http = require('node:http');
 const qs = require('node:querystring')
 const URL = require('node:url');
-
+const logger = require('./logger');
 function homePageResponse() {
   return "<html><head><title>Home Page</title></head><body>I am in Home page</body></html>"
 }
@@ -12,20 +12,20 @@ function contactPageResponse() {
 
 function responseErrHandler(err) {
   if (err) {
-    console.error(err);
-    console.log("Error in sending response");
+    logger.error(err);
+    logger.log("Error in sending response");
     return;
   }
 }
 
 
 const server = http.createServer(function (req, res) {
-  console.log("Request Received");
-  console.log(req.url);
-  console.log(req.method);
+  logger.log("Request Received");
+  logger.log(req.url);
+  logger.log(req.method);
   let url = URL.parse(req.url);
-  console.log(url.pathname);
-  console.log("query params : %o", qs.decode(url.query));
+  logger.log(url.pathname);
+  logger.log("query params : %o", qs.decode(url.query));
 
   if (req.method == 'GET' && url.pathname == "/home") {
     res.statusCode = 200
@@ -41,11 +41,12 @@ const server = http.createServer(function (req, res) {
     });
 
     req.on('end', function() {
-      console.log("Data in the request %s", data);
+      logger.log("Data in the request %s", data);
     });
 
     res.write("Registration successful", responseErrHandler);
   } else {
+    logger.error("Bad request");
     res.statusCode = 400
     res.statusMessage = "Server only supports GET request.";
   }
