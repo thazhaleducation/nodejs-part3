@@ -2,13 +2,7 @@ const http = require('node:http');
 const qs = require('node:querystring')
 const URL = require('node:url');
 const logger = require('./logger');
-function homePageResponse() {
-  return "<html><head><title>Home Page</title></head><body>I am in Home page</body></html>"
-}
-
-function contactPageResponse() {
-  return "<html><head><title>Contact Page</title></head><body>Contact @ thazhal software</body></html>"
-}
+const { homePageResponse, contactPageResponse } = require("./handlers");
 
 function responseErrHandler(err) {
   if (err) {
