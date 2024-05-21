@@ -1,4 +1,4 @@
-class UserDefinedError extends Error {
+class NotANumberError extends Error {
   message() {
     return "Argument is not a number";
   }
@@ -7,10 +7,10 @@ class UserDefinedError extends Error {
 module.exports = {
   add: (a, b) => {
     if (typeof a != "number") {
-      throw new UserDefinedError("first argument is not type of number");
+      throw new NotANumberError("first argument is not type of number");
     }
     if (typeof b != "number") {
-      throw new UserDefinedError("second argument is not type of number");
+      throw new NotANumberError("second argument is not type of number");
     }
     return a + b;
   },
